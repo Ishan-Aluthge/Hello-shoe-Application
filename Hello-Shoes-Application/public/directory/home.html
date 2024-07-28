@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link href="../assets/img/logo.ico" rel="icon" type="image/x-icon">
+
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <meta
+            content="width=device-width, initial-scale=1"
+            name="viewport"
+    />
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+</head>
+<body class="relative overflow-x-hidden  font-Roboto items-center min-h-screen">
+<nav class="hidden xl:inline">
+    <div class="justify-between items-center p-5 hidden lg:flex">
+        <div class="flex items-center gap-5">
+            <img alt="logo" class="w-20 h-20 rounded-full" src="../assets/img/logo.jpg">
+            <h1 class="text-2xl font-bold">Hello Shoes PVT LTD.</h1>
+            <div>
+                <div class="flex flex-row gap-1 items-center">
+                    <p class="font-medium text-xl">Date:</p>
+                    <p class="w-[6rem] font-medium rounded-md p-1 bg-slate-200" id="dateFld">
+                </div>
+            </div>
+            <div class="flex flex-row gap-1 items-center">
+                <p class="font-medium text-xl">Time:</p>
+                <p class="font-medium rounded-md p-1 bg-slate-200" id="timeFld" type="time">
+            </div>
+        </div>
+        <div class="flex items-center gap-5">
+            <button class=" p-2 hover:border-b-2 border-blue-600 hover:scale-110 hover:text-blue-600 transition-all duration-300 font-semibold text-xl"
+                    id="orderBtn"
+                    onclick="navigationOnClick(this.value)" value="order">Order
+            </button>
+            <button class=" p-2 hover:border-b-2 border-blue-600 hover:scale-110 hover:text-blue-600 transition-all duration-300 font-semibold text-xl"
+                    id="adminBtn"
+                    onclick="navigationOnClick(this.value)" value="admin">Admin
+            </button>
+            <button class=" p-2 hover:border-b-2 border-blue-600 hover:scale-110 hover:text-blue-600 transition-all duration-300 font-semibold text-xl"
+                    id="inventoryBtn"
+                    onclick="navigationOnClick(this.value)" value="inventory">Inventory
+            </button>
+            <button class=" p-2 hover:border-b-2 border-blue-600 hover:scale-110 hover:text-blue-600 transition-all duration-300 font-semibold text-xl"
+                    id="supplierBtn"
+                    onclick="navigationOnClick(this.value)" value="supplier">Supplier
+            </button>
+            <button class=" p-2 hover:border-b-2 border-blue-600 hover:scale-110 hover:text-blue-600 transition-all duration-300 font-semibold text-xl"
+                    id="employeeBtn"
+                    onclick="navigationOnClick(this.value)" value="employee">Employee
+            </button>
+            <button class="p-2 hover:border-b-2 border-blue-600 hover:scale-110 hover:text-blue-600 transition-all duration-300 font-semibold text-xl"
+                    id="customerBtn"
+                    onclick="navigationOnClick(this.value)" value="customer">Customer
+            </button>
+            <button class="p-2 hover:border-b-2 border-red-500 hover:scale-110 hover:text-red-500 transition-all duration-300 font-semibold text-xl"
+                    id="logoutBtn"
+                    onclick="navigationOnClick(this.value)" value="logout">LOGOUT
+            </button>
+        </div>
+    </div>
+
+</nav>
+
+<!--Alert Dialog-->
+<div class="flex m-1 gap-5 flex-row items-center justify-centers transition-all duration-300 absolute top-0 right-[-100%] bg-orange-100 z-50 border-l-4 border-orange-500 text-orange-700 p-4"
+     id="alert"
+     role="alert">
+    <div>
+        <p class="font-bold">Be Warned</p>
+        <p id="alertDescription">Something Went Wrong</p>
+    </div>
+    <button class="font-black hover:cursor-hand" id="alertCloseBtn">X</button>
+</div>
+
+<!--Success Dialog-->
+<div class="flex m-1 gap-5 flex-row items-center justify-centers transition-all duration-300 absolute top-0 right-[-100%] bg-green-100 z-50 border-l-4 border-green-500 text-green-700 p-4"
+     id="success"
+     role="alert">
+    <div>
+        <p class="font-bold">Complete</p>
+        <p id="successDescription">Successfully</p>
+    </div>
+    <button class="font-black hover:cursor-hand" id="successCloseBtn">X</button>
+</div>
+
+<!--Logout Dialog-->
+<div class="transition-all hidden duration-500 min-h-screen min-w-full overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 z-50 justify-center items-center"
+     id="logOutDialog">
+    <div class="fixed inset-0 bg-black bg-opacity-50">
+        <div class="relative flex justify-center items-center min-h-screen">
+            <div class="bg-white p-5 rounded-lg w-fit h-fit flex-col flex gap-4">
+                <div class="justify-between items-center flex flex-row">
+                    <h1 class="text-2xl font-bold">LOGOUT</h1>
+                </div>
+                <form class="flex flex-col gap-3 items-center">
+                    <p class="text-slate-500 text-xsl">Are you sure want to logout?</p>
+                    <div class="flex flex-row justify-between gap-16">
+                        <button class="bg-red-500 p-2 rounded-md" id="logoutConfirmBtn">
+                            Yes
+                        </button>
+                        <button class="bg-blue-500 p-2 rounded-md" id="logoutCancelBtn">
+                            No
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Card Checkout Section-->
+<div class="transition-all hidden duration-500 min-h-screen min-w-full overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 z-50 justify-center items-center"
+     id="cardCheckoutFormDiv">
+    <div class="fixed inset-0 bg-black bg-opacity-50">
+        <div class="relative flex justify-center items-center min-h-screen">
+            <div class="bg-white p-5 rounded-lg w-fit h-fit flex-col flex gap-4">
+                <div class="justify-between items-center flex flex-row">
+                    <h1 class="text-2xl font-bold">Checkout</h1>
+                    <button class="font-black hover:cursor-hand text-red-500" id="cardCheckoutCloseBtn">X</button>
+                </div>
+                <div class="flex flex-col gap-3 items-center">
+                    <div class="flex-col flex gap-7">
+                        <label class="flex flex-col gap-1">
+                            <span class="font-bold">Sub Total(Rs)</span>
+                            <input class="bg-slate-200 p-2 rounded-md h-[2.3rem] w-[15rem]" disabled
+                                   id="cardCheckoutSubTotalFld"
+                                   type="number">
+                        </label>
+                        <label class="flex flex-col gap-1">
+                            <span class="font-bold">Bank</span>
+                            <select class="bg-slate-200 rounded-md p-2 h-[2.3rem] w-[15rem] hover:border-2 border-blue-500"
+                                    id="bankSelectFld">
+                                <option value="BOC">BOC Bank</option>
+                                <option value="COMMERCIAL">Commercial Bank</option>
+                                <option value="PEOPLES">Peoples Bank</option>
+                                <option value="SAMPATH">Sampath Bank</option>
+                                <option value="HNB">HNB Bank</option>
+                                <option value="NSB">NSB Bank</option>
+                            </select>
+                        </label>
+                        <label class="flex flex-col gap-1">
+                            <span class="font-bold">Last 4 Digit of the Card</span>
+                            <input class="bg-slate-200 rounded-md p-2 h-[2.3rem] w-[15rem] hover:border-2 border-blue-500"
+                                   id="cardNumberFld"
+                                   placeholder="XXXX"
+                                   required type="number">
+                        </label>
+                    </div>
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                            id="cardCheckoutConfirmBtn" type="submit">
+                        <svg aria-hidden="true" class="hidden mr-3 w-4 h-4 text-white animate-spin"
+                             fill="none"
+                             id="checkoutConfirmBtnLoadingAnimationCard" role="status"
+                             viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                  fill="#E5E7EB"></path>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                  fill="currentColor"></path>
+                        </svg>
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Invoice Reprint Section-->
+<div class="transition-all hidden duration-500 min-h-screen min-w-full overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 z-50 justify-center items-center"
+     id="invoiceFormDiv">
+    <div class="fixed inset-0 bg-black bg-opacity-50">
+        <div class="relative flex justify-center items-center min-h-screen">
+            <div class="bg-white p-5 rounded-lg w-fit h-fit flex-col flex gap-4">
+                <div class="justify-between items-center flex flex-row">
+                    <h1 class="text-2xl font-bold">Invoice</h1>
+                    <button class="font-black hover:cursor-hand text-red-500" id="invoiceFormDivCloseBtn">X</button>
+                </div>
+                <div class="flex flex-col gap-3 items-center">
+                    <label class="flex-col flex gap-3">
+                        <span class="font-medium">Order ID</span>
+                        <input type="text" id="invoiceOrderIdFld" placeholder="SALXXXXXXX"
+                               class="bg-slate-200 uppercase rounded-md p-2 h-[2.3rem] w-[15rem] font-medium">
+                    </label>
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                            id="getInvoiceBtn" type="button">
+                        <svg aria-hidden="true" class="hidden mr-3 w-4 h-4 text-white animate-spin"
+                             fill="none"
+                             id="invoiceConfirmBtnLoadingAnimationCard" role="status"
+                             viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                  fill="#E5E7EB"></path>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                  fill="currentColor"></path>
+                        </svg>
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Cash Checkout Section-->
+<div class="transition-all hidden duration-500 min-h-screen min-w-full overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 z-50 justify-center items-center"
+     id="cashCheckoutFormDiv">
+    <div class="fixed inset-0 bg-black bg-opacity-50">
+        <div class="relative flex justify-center items-center min-h-screen">
+            <div class="bg-white p-5 rounded-lg w-fit h-fit flex-col flex gap-4">
+                <div class="justify-between items-center flex flex-row">
+                    <h1 class="text-2xl font-bold">Checkout</h1>
+                    <button class="font-black hover:cursor-hand text-red-500" id="cashCheckoutCloseBtn">X</button>
+                </div>
+                <div class="flex flex-col gap-3 items-center">
+                    <div class="flex-col flex gap-7">
+                        <label class="flex flex-col gap-1">
+                            <span class="font-bold">Sub Total(Rs)</span>
+                            <input class="bg-slate-200 p-2 rounded-md h-[2.3rem] w-[15rem]" disabled
+                                   id="cashCheckoutSubTotalFld"
+                                   type="number">
+                        </label>
+                        <label class="flex flex-col gap-1">
+                            <span class="font-bold">Cash(Rs)</span>
+                            <input class="bg-slate-200 p-2 rounded-md h-[2.3rem] w-[15rem] hover:border-2 border-blue-500"
+                                   id="cashFld" placeholder="0.0"
+                                   type="number">
+                        </label>
+                        <label class="flex flex-col gap-1">
+                            <span class="font-bold">Balance(Rs)</span>
+                            <input class="bg-slate-200 p-2 rounded-md h-[2.3rem] w-[15rem]" disabled id="balanceFld"
+                                   type="number">
+                        </label>
+                    </div>
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                            id="cashCheckoutConfirmBtn" type="submit">
+                        <svg aria-hidden="true" class="hidden mr-3 w-4 h-4 text-white animate-spin"
+                             fill="none"
+                             id="checkoutConfirmBtnLoadingAnimationCash" role="status"
+                             viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                  fill="#E5E7EB"></path>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                  fill="currentColor"></path>
+                        </svg>
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main>
+    <!--Order Section-->
+    <main class="min-h-screen relative flex flex-col gap-3 transition-all ease-in duration-300" id="orderSection">
+        <section class="overflow-auto flex flex-col p-2 m-2 relative gap-5">
+            <div class="flex flex-row gap-3">
+                <a class="p-2 bg-blue-500 rounded-md hover:bg-blue-600 font-medium shadow-md"
+                   href="../directory/refund.html"
+                   target="_blank">Refund</a>
+                <button class="p-2 bg-blue-500 rounded-md hover:bg-blue-600 font-medium shadow-md" id="lastInvoiceBtn">
+                    Last Invoice
+                </button>
+                <button class="p-2 bg-blue-500 rounded-md hover:bg-blue-600 font-medium shadow-md" id="invoiceBtn">
+                    Invoices
+                </button>
+            </div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"
+                 id="stockTableLoadingAnimation">
+                <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                        disabled
+                        type="button">
+                    <svg aria-hidden="true" class="inline w-4 h-4 me-3 text-white animate-spin" fill="none"
+                         role="status" viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                              fill="#E5E7EB"/>
+                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                              fill="currentColor"/>
+                    </svg>
+                    Loading...
+                </button>
+            </div>
+            <table class="w-full text-md text-left rtl:text-right">
+                <thead>
+                <tr class="text-left text-sm text-gray-700 uppercase bg-gray-50">
+                    <th class="px-6 rounded-s-lg py-3w-[15vw] w-[20vw]" scope="col">
+                        Code
+                    </th>
+                    <th class="px-6 py-3 w-[40vw]" scope="col">
+                        Description
+                    </th>
+                    <th class="px-6 py-3 w-[40vw]" scope="col">
+                        Size(UK)
+                    </th>
+                    <th class="px-6 py-3 w-[20vw]" scope="col">
+                        QTY
+                    </th>
+                    <th class="px-6 py-3 w-[20vw]" scope="col">
+                        Price(Rs)
+                    </th>
+                    <th class="px-6 py-3 w-[20vw]" scope="col">
+                        Total(Rs)
+                    </th>
+                    <th class="px-6 rounded-e-lg py-3 w-[10vw]" scope="col">
+                        Action
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="orderTableBody">
+                <!-- Table body content goes here -->
+                </tbody>
+            </table>
+        </section>
+        <section
+                class="w-full z-10 mx-auto pl-10 p-5 pb-6 pr-10 flex flex-row justify-between items-center transition-all duration-300 fixed bottom-0 shadow-md border-t-2 border-black">
+            <div class="flex-col flex justify-between gap-10">
+                <label class="flex flex-col gap-1">
+                    <span class="font-bold">Customer ID</span>
+                    <div class="flex flex-row">
+                        <input class="bg-slate-200 font-bold p-1 rounded-md border-blue-600 hover:border-2 h-[2.5rem] w-[13rem]"
+                               id="orderCustomerIdFld"
+                               placeholder="ID,Email or Mobile"
+                               type="text"
+                        >
+                        <div class="hidden py-2 px-4 justify-center items-center text-blue-500 w-full transition ease-in duration-200 text-center text-base font-semibold"
+                             id="customerIdFldLoadingAnimation">
+                            <svg class="mr-2 animate-spin" fill="currentColor" height="20" viewBox="0 0 1792 1792"
+                                 width="20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M526 1394q0 53-37.5 90.5t-90.5 37.5q-52 0-90-38t-38-90q0-53 37.5-90.5t90.5-37.5 90.5 37.5 37.5 90.5zm498 206q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-704-704q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm1202 498q0 52-38 90t-90 38q-53 0-90.5-37.5t-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-964-996q0 66-47 113t-113 47-113-47-47-113 47-113 113-47 113 47 47 113zm1170 498q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-640-704q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm530 206q0 93-66 158.5t-158 65.5q-93 0-158.5-65.5t-65.5-158.5q0-92 65.5-158t158.5-66q92 0 158 66t66 158z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="hidden justify-center items-center" id="customerConfirmMark">
+                            <svg height="32px" viewBox="0 0 48 48" width="32px" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"
+                                      fill="#c8e6c9"/>
+                                <path d="M34.586,14.586l-13.57,13.586l-5.602-5.586l-2.828,2.828l8.434,8.414l16.395-16.414L34.586,14.586z"
+                                      fill="#4caf50"/>
+                            </svg>
+                        </div>
+                    </div>
+                </label>
+                <label class="flex flex-col gap-1">
+                    <span class="font-bold">Item ID</span>
+                    <div class="flex flex-row">
+                        <input class="bg-slate-200 font-bold p-1 rounded-md border-blue-600 hover:border-2  h-[2.5rem] w-[13rem]"
+                               id="orderItemIdFld"
+                               placeholder="XXXXXXXX"
+                               type="text"
+                        >
+                        <div class="hidden py-2 px-4 justify-center items-center text-blue-500 w-full transition ease-in duration-200 text-center text-base font-semibold"
+                             id="itemLoadingAnimation">
+                            <svg class="mr-2 animate-spin" fill="currentColor" height="20" viewBox="0 0 1792 1792"
+                                 width="20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M526 1394q0 53-37.5 90.5t-90.5 37.5q-52 0-90-38t-38-90q0-53 37.5-90.5t90.5-37.5 90.5 37.5 37.5 90.5zm498 206q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-704-704q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm1202 498q0 52-38 90t-90 38q-53 0-90.5-37.5t-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-964-996q0 66-47 113t-113 47-113-47-47-113 47-113 113-47 113 47 47 113zm1170 498q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-640-704q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm530 206q0 93-66 158.5t-158 65.5q-93 0-158.5-65.5t-65.5-158.5q0-92 65.5-158t158.5-66q92 0 158 66t66 158z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </label>
+                <div class="flex-col gap-5 justify-between items-center hidden" id="orderOptionFld">
+                    <div class="flex-row gap-3 flex">
+                        <label class="flex flex-col gap-1">
+                            <span class="font-bold">Size</span>
+                            <select class="h-[2rem] bg-slate-200 font-bold p-1 rounded-md border-blue-600 hover:border-2"
+                                    id="sizeSelect">
+                            </select>
+                        </label>
+                        <label class="flex flex-col gap-1">
+                            <span class="font-bold">QTY</span>
+                            <input class="w-[5rem] h-[2rem] bg-slate-200 font-bold p-1 rounded-md border-blue-600 hover:border-2"
+                                   id="qtyFld"
+                                   type="number">
+                        </label>
+                    </div>
+                    <button class="bg-blue-400 p-2 rounded-md font-semibold text-xl hover:bg-blue-600"
+                            id="addOrderBtn"
+                            type="button">Add Order
+                    </button>
+                </div>
+            </div>
+            <div class="flex-col flex gap-5">
+                <div class="flex flex-row gap-5">
+                    <label class="flex flex-col gap-1">
+                        <span class="font-bold">Sub Total(Rs)</span>
+                        <input class="bg-slate-200 p-2 font-bold rounded-md border-blue-600  h-[2.5rem] w-[13rem]"
+                               disabled
+                               id="orderTotalFld"
+                               placeholder="0.0"
+                               type="text"
+                        >
+                    </label>
+                    <label class="flex flex-col gap-1">
+                        <span class="font-bold">Pay</span>
+                        <select class="p-2 rounded-md font-semibold h-[2.5rem] w-[13rem] hover:border-2 border-blue-500 bg-slate-200"
+                                id="paymentTypeSelect">
+                            <option class="p-1" value="CASH">Cash</option>
+                            <option class="p-1" value="CARD">Card</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="flex items-center justify-center">
+                    <button class="rounded-md font-semibold text-xl h-[2rem] w-[12rem] bg-blue-500 hover:bg-blue-600"
+                            id="checkoutBtn"
+                            type="button">Checkout
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--Employee Section-->
+    <main class="hidden pt-5 transition-all ease-in duration-300" id="employeeSection">
+        <section class="flex flex-col gap-3 pl-10 pr-10">
+            <div class="flex flex-row justify-between items-center">
+                <div class="flex-col flex gap-5 items-start">
+                    <h1 class="text-2xl font-bold">Employee</h1>
+                    <div>
+                        <label class="font-semibold"> Search
+                            <input class="w-[20rem] m-1 h-[2rem] bg-slate-100 hover:border-2 focus:border-2 border-blue-600 rounded-md p-2"
+                                   id="employeeSearchFld"
+                                   placeholder="Code, Name, Address......."
+                                   type="text">
+                        </label>
+                        <button class="w-[3rem] h-[2rem] hover:text-blue-600 p-2 font-semibold text-xl"
+                                id="searchEmployeeBtn">Search
+                        </button>
+                    </div>
+                </div>
+                <button class="bg-blue-400 p-2 rounded-md font-semibold text-xl hover:bg-blue-600"
+                        id="showEmployeeAddForm"
+                        type="button">Add Employee
+                </button>
+            </div>
+            <div class="transition-all duration-500 hidden min-h-screen min-w-full overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 z-50 justify-center items-center"
+                 id="addEmployee">
+                <div class="fixed inset-0 bg-black bg-opacity-50">
+                    <div class="relative flex justify-center items-center min-h-screen" id="employeeFormDiv">
+                        <div class="bg-white p-5 rounded-lg w-fit h-fit flex-col flex gap-4">
+                            <div class="justify-between items-center flex flex-row">
+                                <h1 class="text-2xl font-bold">Add Employee</h1>
+                                <button class="bg-red-500 p-1 rounded-md font-semibold text-md hover:bg-red-600"
+                                        id="closeEmployeeAddForm" type="button">Close
+                                </button>
+                            </div>
+                            <form class="flex flex-col gap-3 items-center" id="addEmployeeForm">
+                                <div class="flex flex-col gap-3 items-center justify-center">
+                                    <img alt="employeeImg" class="w-[120px] h-[120px] bg-center bg-cover rounded-full"
+                                         id="employeeImgPreview" src="../assets/img/default_employee_avatar.png">
+                                    <input accept="image/jpeg" alt="employeeImg" class="p-2 eFld" id="employeeImg"
+                                           name="image"
+                                           type="file">
+                                </div>
+                                <div class="flex flex-row gap-5">
+                                    <div class="flex flex-col gap-3">
+                                        <label class="hidden flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Code</span>
+                                            <input class="eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeCodeFld"
+                                                   name="code"
+                                                   placeholder="Code"
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Name</span>
+                                            <input class="eFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeNameFld"
+                                                   name="name"
+                                                   placeholder="Name"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Gender</span>
+                                            <select class="eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                    id="employeeGenderSelect"
+                                                    name="gender"
+                                                    required
+                                                    type="text"
+                                            >
+                                                <option value="MALE">MALE</option>
+                                                <option value="FEMALE">FEMALE</option>
+                                                <option value="RN">Rather Not</option>
+                                            </select>
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">DOB</span>
+                                            <input class="eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeDOBFld"
+                                                   name="dob"
+                                                   placeholder="DOB"
+                                                   required
+                                                   type="date"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">DOJ</span>
+                                            <input class="eFld rounded bg-slate-100  p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeDateOfJoinedFld"
+                                                   name="doj"
+                                                   placeholder="DOJ"
+                                                   required
+                                                   type="date"
+                                            >
+                                        </label>
+                                    </div>
+                                    <div class="flex flex-col gap-3">
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Lane</span>
+                                            <input class="eFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeLaneFld"
+                                                   name="lane"
+                                                   placeholder="Lane"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">City</span>
+                                            <input class="eFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeCityFld"
+                                                   name="city"
+                                                   placeholder="City"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">State</span>
+                                            <input class="eFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeStateFld"
+                                                   name="state"
+                                                   placeholder="State"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Postal Code</span>
+                                            <input class="eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeePostalCodeFld"
+                                                   name="zip"
+                                                   placeholder="Postal Code"
+                                                   required
+                                                   type="number"
+                                            >
+                                        </label>
+                                    </div>
+                                    <div class="flex flex-col gap-3">
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Civil Status</span>
+                                            <select class="eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                    id="civilStatusSelect"
+                                                    name="status"
+                                                    required
+                                                    type="text"
+                                            >
+                                                <option value="SINGLE">SINGLE</option>
+                                                <option value="MARRIED">MARRIED</option>
+                                                <option value="DIVORCED">DIVORCED</option>
+                                                <option class="WIDOWED">WIDOWED</option>
+                                            </select>
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Designation</span>
+                                            <input class="eFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeDesignationFld"
+                                                   name="designation"
+                                                   placeholder="Designation"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Attach Branch</span>
+                                            <input class="eFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeBranchFld"
+                                                   name="branch"
+                                                   placeholder="Attach Branch"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Access Role</span>
+                                            <select class="eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                    id="employeeAccessRoleFld"
+                                                    name="role"
+                                                    required
+                                                    type="text"
+                                            >
+                                                <option value="ADMIN">ADMIN</option>
+                                                <option value="USER">USER</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="flex flex-col gap-3">
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Contact No</span>
+                                            <input class="eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeContactFld"
+                                                   name="contact"
+                                                   placeholder="Contact No"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Email</span>
+                                            <input class="eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeEmailFld"
+                                                   name="email"
+                                                   placeholder="Email"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Guardian</span>
+                                            <input class="eFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeGuardianNameFld"
+                                                   name="gName"
+                                                   placeholder="Guardian Name"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Guardian Contact</span>
+                                            <input class="eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="employeeGuardianContactFld"
+                                                   name="gContact"
+                                                   placeholder="Contact"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                                        id="addEmployeeBtn" type="submit">
+                                    <svg aria-hidden="true" class="hidden mr-3 w-4 h-4 text-white animate-spin"
+                                         fill="none"
+                                         id="employeeBtnLoadingAnimation" role="status"
+                                         viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                              fill="#E5E7EB"></path>
+                                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                              fill="currentColor"></path>
+                                    </svg>
+                                    Add Employee
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center gap-5 mt-3 relative">
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"
+                     id="employeeTableLoadingAnimation">
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                            disabled
+                            type="button">
+                        <svg aria-hidden="true" class="inline w-4 h-4 me-3 text-white animate-spin" fill="none"
+                             role="status" viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                  fill="#E5E7EB"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                  fill="currentColor"/>
+                        </svg>
+                        Loading...
+                    </button>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-600 rounded-md p-2" id="employeeTableRefreshBtn">
+                    Refresh
+                </button>
+                <div class="overflow-auto w-[97vw]">
+                    <table class="w-full shadow-md text-md text-left rtl:text-right">
+                        <thead>
+                        <tr class="text-left text-sm text-gray-700 uppercase bg-gray-50">
+                            <th class="px-6 rounded-s-lg py-3w-[15vw]" scope="col">
+                                Code
+                            </th>
+                            <th class="px-6 rounded-s-lg py-3w-[15vw]" scope="col">
+                                Image
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Name
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Civil Status
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Gender
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3" scope="col">
+                                Birthday
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Lane
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                City
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                State
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Zip
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Contact
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Email
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Attach Branch
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Date of Joined
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3" scope="col">
+                                Designation
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3" scope="col">
+                                Access Level
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3" scope="col">
+                                Emergency Guardian's Name
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3" scope="col">
+                                Emergency Contact
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3 w-[10vw]" scope="col">
+                                Action
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody id="employeeTableBody">
+                        <!-- Table body content goes here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex-row flex justify-center items-center gap-3">
+                    <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl" id="employeeBackwardBtn"
+                            value="prev" onclick="navigateEmployeeTable(this.value)"><
+                    </button>
+                    <p id="employeePageCountFld" class="font-medium">1</p>
+                    <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl" id="employeeForwardBtn"
+                            value="next" onclick="navigateEmployeeTable(this.value)">>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--Inventory Section-->
+    <main class="hidden pt-5 transition-all ease-in duration-300" id="inventorySection">
+        <section class="flex flex-col gap-3 pl-10 pr-10">
+            <div class="flex flex-row relative justify-between items-center">
+                <div class="flex-col flex gap-5 items-start">
+                    <h1 class="text-2xl font-bold">Inventory</h1>
+                    <div>
+                        <label class="font-semibold"> Search
+                            <input class="w-[20rem] m-1 h-[2rem] bg-slate-100 hover:border-2 focus:border-2 border-blue-600 rounded-md p-2"
+                                   id="inventorySearchFld"
+                                   placeholder="Code, Name, Address......."
+                                   type="text">
+                        </label>
+                        <button class="w-[3rem] h-[2rem] hover:text-blue-600 p-2 font-semibold text-xl"
+                                id="inventorySearchBtn">Search
+                        </button>
+                    </div>
+                </div>
+                <div class="flex z-30 flex-col gap-10 items-center absolute right-0 top-24 justify-center">
+                    <button class="bg-blue-400 p-2 rounded-md font-semibold text-xl hover:bg-blue-600"
+                            id="showInventoryAddForm"
+                            type="button">Add Item
+                    </button>
+                    <a class="text-xl border-blue-500 hover:text-blue-500 hover:scale-110 transition-all duration-300 pb-0"
+                       href="./stock.html" target="_blank" type="button">
+                        Stocks →
+                    </a>
+                </div>
+            </div>
+            <div class="transition-all duration-500 hidden min-h-screen min-w-full overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 z-50 justify-center items-center"
+                 id="addInventory">
+                <div class="fixed inset-0 bg-black bg-opacity-50">
+                    <div class="relative flex justify-center items-center min-h-screen" id="inventoryFormDiv">
+                        <div class="bg-white p-5 rounded-lg w-fit h-fit flex-col flex gap-4">
+                            <div class="justify-between items-center flex flex-row">
+                                <h1 class="text-2xl font-bold">Add Item</h1>
+                                <button class="bg-red-500 p-1 rounded-md font-semibold text-md hover:bg-red-600"
+                                        id="closeInventoryAddForm" type="button">Close
+                                </button>
+                            </div>
+                            <form class="flex flex-col gap-3 items-center" id="addInventoryForm">
+                                <div class="flex flex-col gap-3 items-center justify-center">
+                                    <img alt="itemImg" class="w-[120px] h-[120px] bg-center bg-cover rounded-full"
+                                         id="inventoryImgPreview" src="../assets/img/default_employee_avatar.png">
+                                    <input accept="image/jpeg" alt="itemImg" class="p-2 eFld" id="inventoryImg"
+                                           name="image"
+                                           type="file">
+                                </div>
+                                <div class="flex flex-row gap-5">
+                                    <div class="flex flex-col gap-3">
+                                        <label class="hidden flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Code</span>
+                                            <input class="eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="inventoryCodeFld"
+                                                   name="code"
+                                                   placeholder="Code"
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Name</span>
+                                            <input class="capitalize eFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="inventoryNameFld"
+                                                   name="name"
+                                                   placeholder="Name"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Supplier ID</span>
+                                            <div class="flex flex-row gap-3">
+                                                <input class="iFld uppercase rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                       id="inventorySupplierIDFld"
+                                                       name="sId"
+                                                       placeholder="Supplier ID"
+                                                       required
+                                                       type="text"
+                                                >
+                                                <button class="p-2 bg-blue-500 rounded-md hover:bg-blue-600"
+                                                        id="inventorySupplierFindBtn" type="button">Find
+                                                </button>
+                                            </div>
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Supplier Name</span>
+                                            <input class="capitalize rounded bg-slate-100 p-1 font-light lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   disabled
+                                                   id="inventorySupplierNameFld"
+                                                   name="sName"
+                                                   placeholder="Supplier Name"
+                                                   type="text"
+                                            >
+                                        </label>
+                                    </div>
+                                    <div class="flex flex-col gap-3">
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Buying Price(Rs)</span>
+                                            <input class="iFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="buyingPriceFld"
+                                                   name="bPrice"
+                                                   placeholder="0.0"
+                                                   required
+                                                   type="number"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Selling Price(Rs)</span>
+                                            <input class="iFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="sellingPriceFld"
+                                                   name="sPrice"
+                                                   placeholder="0.0"
+                                                   required
+                                                   type="number"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Expected Profit(Rs)</span>
+                                            <input class="rounded bg-slate-100 p-1 font-light lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   disabled
+                                                   id="expectedProfitFld"
+                                                   name="eProfit"
+                                                   placeholder="0.0"
+                                                   type="number"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold" onchange="">Profit Margin(%)</span>
+                                            <input class="rounded bg-slate-100 p-1 font-light  lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   disabled
+                                                   id="pMarginFld"
+                                                   name="profitMargin"
+                                                   placeholder="0.0%"
+                                                   type="number"
+                                            >
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Occasion</span>
+                                            <select class="iFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                    id="inventoryOccasionFld"
+                                                    name="occasion"
+                                                    required
+                                                    type="text"
+                                            >
+                                                <option value="S">SPORT</option>
+                                                <option value="F">FORMAL</option>
+                                                <option value="C">CASUAL</option>
+                                                <option value="I">INDUSTRIAL</option>
+                                            </select>
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-blue-600 font-bold">Verities</span>
+                                            <select class="iFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                    id="inventoryVeritiesFld"
+                                                    name="verities"
+                                                    required
+                                                    type="text"
+                                            >
+                                                <option value="H">Heel</option>
+                                                <option value="F">Flats</option>
+                                                <option value="FF">Flip Flops</option>
+                                                <option value="W">Wedges</option>
+                                                <option value="SD">Sandals</option>
+                                                <option value="S">Shoes</option>
+                                                <option value="SL">Slippers</option>
+                                            </select>
+                                            <label class="flex flex-col gap-2">
+                                                <span class="text-blue-600 font-bold">Gender</span>
+                                                <select class="iFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                        id="inventoryGenderSelect"
+                                                        name="gender"
+                                                        required
+                                                        type="text"
+                                                >
+                                                    <option value="M">MALE</option>
+                                                    <option value="F">FEMALE</option>
+                                                    <option value="U">UNISEX</option>
+                                                </select>
+                                            </label>
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                                        id="addInventoryBtn" type="submit">
+                                    <svg aria-hidden="true" class="hidden mr-3 w-4 h-4 text-white animate-spin"
+                                         fill="none"
+                                         id="inventoryBtnLoadingAnimation" role="status"
+                                         viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                              fill="#E5E7EB"></path>
+                                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                              fill="currentColor"></path>
+                                    </svg>
+                                    Add Item
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center gap-5 mt-3 relative">
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"
+                     id="inventoryTableLoadingAnimation">
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                            disabled
+                            type="button">
+                        <svg aria-hidden="true" class="inline w-4 h-4 me-3 text-white animate-spin" fill="none"
+                             role="status" viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                  fill="#E5E7EB"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                  fill="currentColor"/>
+                        </svg>
+                        Loading...
+                    </button>
+                </div>
+                <div class="absolute left-0 flex flex-col gap-3">
+                    <button class="bg-blue-500 w-20 hover:bg-blue-600 rounded-md p-2" id="inventoryTableRefreshBtn">
+                        Refresh
+                    </button>
+                    <div class="flex flex-col gap-3 pb-3">
+                        <h2 class="font-bold text-2xl">Sort</h2>
+                        <ul class="flex flex-row gap-3">
+                            <li>
+                                <button class="p-2 font-medium rounded-md border-blue-500 border-2 hover:bg-blue-500"
+                                        id="sortHighToLowBtn">High to Low
+                                </button>
+                            </li>
+                            <li>
+                                <button class="p-2 font-medium rounded-md border-blue-500 border-2 hover:bg-blue-500"
+                                        id="sortLowToHighBtn">Low to High
+                                </button>
+                            </li>
+                            <li>
+                                <button class="p-2 font-medium rounded-md border-blue-500 border-2 hover:bg-blue-500"
+                                        id="sortMenBtn">Men
+                                </button>
+                            </li>
+                            <li>
+                                <button class="p-2 font-medium rounded-md border-blue-500 border-2 hover:bg-blue-500"
+                                        id="sortWomanBtn">Woman
+                                </button>
+                            </li>
+                            <li>
+                                <button class="p-2 font-medium rounded-md border-blue-500 border-2 hover:bg-blue-500"
+                                        id="sortAZBtn">A-Z
+                                </button>
+                            </li>
+                            <li>
+                                <button class="p-2 font-medium rounded-md border-blue-500 border-2 hover:bg-blue-500"
+                                        id="sortZABtn">Z-A
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pt-44 w-[97vw] overflow-auto">
+                    <table class="w-full text-md text-left rtl:text-right max-h-[45vh]">
+                        <thead>
+                        <tr class="text-left text-sm text-gray-700 uppercase bg-gray-50">
+                            <th class="px-6 rounded-s-lg py-3w-[15vw]" scope="col">
+                                Code
+                            </th>
+                            <th class="px-6 rounded-s-lg py-3w-[15vw]" scope="col">
+                                Image
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Name
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Category
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Buying Price(Rs)
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3" scope="col">
+                                Selling Price(Rs)
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Expected Profit(Rs)
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Profit Margin(%)
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Quantity
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Supplier ID
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Supplier Name
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3 w-[10vw]" scope="col">
+                                Action
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                        <!-- Table body content goes here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex-row flex justify-center items-center gap-3">
+                    <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl" id="inventoryBackwardBtn"
+                            value="prev" onclick="navigateInventoryTable(this.value)"><
+                    </button>
+                    <p id="inventoryPageCountFld" class="font-medium">1</p>
+                    <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl" id="inventoryForwardBtn"
+                            value="next" onclick="navigateInventoryTable(this.value)">>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--Supplier Section-->
+    <main class="relative pt-5 hidden transition-all ease-in duration-300" id="supplierSection">
+        <section class="flex flex-col gap-3 pl-10 pr-10">
+            <div class="flex flex-row justify-between items-center">
+                <div class="flex-col flex gap-5 items-start">
+                    <h1 class="text-2xl font-bold">Suppliers</h1>
+                    <div>
+                        <label class="font-semibold"> Search
+                            <input class="w-[20rem] m-1 h-[2rem] bg-slate-100 hover:border-2 focus:border-2 border-blue-600 rounded-md p-2"
+                                   id="supplierSearchFld"
+                                   placeholder="Code, Name, Address......."
+                                   type="text">
+                        </label>
+                        <button class="w-[3rem] h-[2rem] hover:text-blue-600 p-2 font-semibold text-xl"
+                                id="searchSupplierBtn">Search
+                        </button>
+                    </div>
+                </div>
+                <button class="bg-blue-400 p-2 rounded-md font-semibold text-xl hover:bg-blue-600"
+                        id="showSupplierAddForm"
+                        type="button">Add Supplier
+                </button>
+            </div>
+            <div class="transition-all duration-500 hidden min-h-screen min-w-full overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 z-50 justify-center items-center"
+                 id="addSupplier">
+                <div class="fixed inset-0 bg-black bg-opacity-50">
+                    <div class="flex justify-center items-center min-h-screen">
+                        <div class="bg-white p-5 rounded-lg w-fit h-fit flex-col flex gap-4">
+                            <div class="justify-between items-center flex flex-row">
+                                <h1 class="text-2xl font-bold">Add Supplier</h1>
+                                <button class="bg-red-500 p-1 rounded-md font-semibold text-md hover:bg-red-600"
+                                        id="closeSupplierAddForm" type="button">Close
+                                </button>
+                            </div>
+                            <form class="flex flex-col gap-5 items-center" id="addSupplierForm">
+                                <div class="flex flex-row gap-5">
+                                    <div class="flex flex-col gap-3 justify-evenly">
+                                        <label class="hidden flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Code</span>
+                                            <input class="rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="supplierCodeFld"
+                                                   name="code"
+                                                   placeholder="Code"
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Name</span>
+                                            <input class="sFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="supplierNameFld"
+                                                   name="name"
+                                                   placeholder="Name"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Lane</span>
+                                            <input class="sFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="supplierLaneFld"
+                                                   name="lane"
+                                                   placeholder="Lane"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">City</span>
+                                            <input class="sFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="supplierCityFld"
+                                                   name="city"
+                                                   placeholder="City"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">State</span>
+                                            <input class="sFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="supplierStateFld"
+                                                   name="state"
+                                                   placeholder="State"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Postal Code</span>
+                                            <input class="sFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="supplierPostalCodeFld"
+                                                   name="zip"
+                                                   placeholder="Postal Code"
+                                                   required
+                                                   type="number"
+                                            >
+                                        </label>
+                                    </div>
+                                    <div class="flex flex-col gap-3">
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Country</span>
+                                            <input class="sFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="supplierCountryFld"
+                                                   name="country"
+                                                   placeholder="Country"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Contact No 1</span>
+                                            <input class="sFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="supplierContact1Fld"
+                                                   name="contact1"
+                                                   placeholder="Contact No 1"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Contact No 2</span>
+                                            <input class="sFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="supplierContact2Fld"
+                                                   name="contact2"
+                                                   placeholder="Contact No 2"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Email</span>
+                                            <input class="sFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="supplierEmailFld"
+                                                   name="email"
+                                                   placeholder="Email"
+                                                   required
+                                                   type="email"
+                                            >
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="w-[10rem] flex bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded text-sm px-5 py-2.5  mr-2 items-center text-center justify-center font-bold text-white"
+                                        id="addSupplierBtn"
+                                        type="submit">
+                                    <svg aria-hidden="true" class="hidden mr-3 w-4 h-4 text-white animate-spin"
+                                         fill="none"
+                                         id="supplierBtnLoadingAnimation" role="status"
+                                         viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                              fill="#E5E7EB"></path>
+                                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                              fill="currentColor"></path>
+                                    </svg>
+                                    Add Supplier
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center gap-5 mt-3 relative">
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"
+                     id="supplierTableLoadingAnimation">
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                            disabled
+                            type="button">
+                        <svg aria-hidden="true" class="inline w-4 h-4 me-3 text-white animate-spin" fill="none"
+                             role="status" viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                  fill="#E5E7EB"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                  fill="currentColor"/>
+                        </svg>
+                        Loading...
+                    </button>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-600 rounded-md p-2" id="supplierTableRefreshBtn">
+                    Refresh
+                </button>
+                <div class="overflow-auto w-[97vw]">
+                    <table class="w-full shadow-md text-md text-left rtl:text-right max-h-[50vh]">
+                        <thead>
+                        <tr class="text-left text-sm text-gray-700 uppercase bg-gray-50">
+                            <th class="px-6 rounded-s-lg py-3w-[15vw]" scope="col">
+                                Code
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Name
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Lane
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                City
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                State
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Zip
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Country
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Contact
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Contact
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Email
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3 w-[10vw]" scope="col">
+                                Action
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody id="supplierTableBody">
+                        <!-- Table body content goes here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex-row flex justify-center items-center gap-3">
+                    <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl" id="supplierBackwardBtn"
+                            value="prev" onclick="navigateSupplierTable(this.value)"><
+                    </button>
+                    <p id="supplierPageCountFld" class="font-medium">1</p>
+                    <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl" id="supplierForwardBtn"
+                            value="next" onclick="navigateSupplierTable(this.value)">>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--Admin Section-->
+    <main class="hidden pt-5 transition-all ease-in duration-300" id="adminSection">
+        <div class="flex-col gap-5 flex justify-between">
+            <div class="flex-row flex justify-evenly gap-20 ml-12 mr-12">
+                <section class="flex-col flex gap-16">
+                    <div class="flex-col flex gap-3">
+                        <label class="flex-row flex gap-2 items-center">
+                            <span class="font-bold">Filter</span>
+                            <select class="bg-slate-200 h-[2.7rem] w-fit hover:border-2 border-blue-500 p-2 rounded-md font-medium"
+                                    id="filterSelect">
+                                <option class="bg-slate-200 p-2 font-medium" value=0>Today</option>
+                                <option class="bg-slate-200 p-2 font-medium" value=7>Past 7 Days</option>
+                                <option class="bg-slate-200 p-2 font-medium" value=30>Past 30 days</option>
+                                <option class="bg-slate-200 p-2 font-medium" value=365>Past 365 days</option>
+                            </select>
+                        </label>
+                        <div class="rounded-md shadow-custom p-5 flex w-[30vw] flex-col gap-5">
+                            <div class="flex-row flex justify-between">
+                                <h2 class="font-bold text-xl">Popular</h2>
+                                <button class="transition-all duration-500" id="popularLoadingBtn" disabled>
+                                    <svg fill="#000000" height="20px"
+                                         viewBox="0 0 489.645 489.645"
+                                         width="20px" xml:space="preserve"
+                                         xmlns="http://www.w3.org/2000/svg"><g>
+	                                    <path d="M460.656,132.911c-58.7-122.1-212.2-166.5-331.8-104.1c-9.4,5.2-13.5,16.6-8.3,27c5.2,9.4,16.6,13.5,27,8.3
+                                            c99.9-52,227.4-14.9,276.7,86.3c65.4,134.3-19,236.7-87.4,274.6c-93.1,51.7-211.2,17.4-267.6-70.7l69.3,14.5
+		                                    c10.4,2.1,21.8-4.2,23.9-15.6c2.1-10.4-4.2-21.8-15.6-23.9l-122.8-25c-20.6-2-25,16.6-23.9,22.9l15.6,123.8
+		                                    c1,10.4,9.4,17.7,19.8,17.7c12.8,0,20.8-12.5,19.8-23.9l-6-50.5c57.4,70.8,170.3,131.2,307.4,68.2
+		                                    C414.856,432.511,548.256,314.811,460.656,132.911z"/>
+                                        </g>
+                                </svg>
+                                </button>
+                            </div>
+                            <div class="flex flex-row justify-between items-center">
+                                <figure>
+                                    <img alt="itemImage" class="rounded-md w-[12.7rem] h-[15rem] bg-cover shadow-custom"
+                                         id="popularItemImg" src="../assets/img/default_employee_avatar.png"/>
+                                </figure>
+                                <div class="flex flex-col gap-3">
+                                    <label class="flex-col gap-2 flex">
+                                        <span class="font-bold">Item ID</span>
+                                        <input class="bg-slate-200 p-2 font-medium rounded-md uppercase" disabled
+                                               id="popularItemIdFld"
+                                               placeholder="XXXXX" type="text">
+                                    </label>
+                                    <label class="flex-col gap-2 flex">
+                                        <span class="font-bold">Item Name</span>
+                                        <input class="bg-slate-200 p-2 font-medium rounded-md capitalize" disabled
+                                               id="popularItemNameFld"
+                                               placeholder="XXXXX" type="text">
+                                    </label>
+                                    <label class="flex-col gap-2 flex">
+                                        <span class="font-bold">Item Selling Price(Rs)</span>
+                                        <input class="bg-slate-200 p-2 font-medium rounded-md" disabled
+                                               id="popularItemSellingPriceFld"
+                                               placeholder="0.0" type="number">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="rounded-md flex-col flex shadow-custom gap-8 p-5">
+                            <div class="flex flex-row justify-between items-center">
+                                <h1 class="text-xl font-bold">Overview</h1>
+                                <button class="transition-all duration-500" id="overViewRefreshBtn">
+                                    <svg fill="#000000" height="20px"
+                                         viewBox="0 0 489.645 489.645"
+                                         width="20px" xml:space="preserve"
+                                         xmlns="http://www.w3.org/2000/svg"><g>
+	                                    <path d="M460.656,132.911c-58.7-122.1-212.2-166.5-331.8-104.1c-9.4,5.2-13.5,16.6-8.3,27c5.2,9.4,16.6,13.5,27,8.3
+                                            c99.9-52,227.4-14.9,276.7,86.3c65.4,134.3-19,236.7-87.4,274.6c-93.1,51.7-211.2,17.4-267.6-70.7l69.3,14.5
+		                                    c10.4,2.1,21.8-4.2,23.9-15.6c2.1-10.4-4.2-21.8-15.6-23.9l-122.8-25c-20.6-2-25,16.6-23.9,22.9l15.6,123.8
+		                                    c1,10.4,9.4,17.7,19.8,17.7c12.8,0,20.8-12.5,19.8-23.9l-6-50.5c57.4,70.8,170.3,131.2,307.4,68.2
+		                                    C414.856,432.511,548.256,314.811,460.656,132.911z"/>
+                                        </g>
+                                </svg>
+                                </button>
+                            </div>
+                            <div class="flex flex-row-reverse items-center justify-evenly gap-3">
+                                <div>
+                                    <label class="flex-col flex gap-2">
+                                        <span class="font-bold">Bills</span>
+                                        <input class="p-2 font-medium rounded-md w-[8rem] bg-slate-200" disabled
+                                               id="billCountFld"
+                                               placeholder="0.0" type="number">
+                                    </label>
+                                </div>
+                                <div class="flex-col flex gap-3">
+                                    <label class="flex-col flex gap-2">
+                                        <span class="font-bold">Total Sale(Rs)</span>
+                                        <input class="p-2 font-medium rounded-md w-[15rem] bg-slate-200" disabled
+                                               id="totalSaleFld"
+                                               placeholder="0.0" type="number">
+                                    </label>
+                                    <label class="flex-col flex gap-2">
+                                        <span class="font-bold">Total Profit(Rs)</span>
+                                        <input class="p-2 font-medium rounded-md w-[15rem] bg-slate-200" disabled
+                                               id="totalProfitFld"
+                                               placeholder="0.0"
+                                               type="number">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="flex-col flex gap-8 pt-12 min-h-screen">
+                    <div class="flex flex-col gap-5 rounded-md shadow-custom p-5 h-[90vh]">
+                        <h2 class="text-xl font-bold">Deactivated Items</h2>
+                        <div class="flex-col flex gap-3 justify-start">
+                            <label class="flex flex-row gap-3 justify-start items-center">
+                                <span class="font-bold">Search</span>
+                                <input class="bg-slate-200 h-[2.3rem] hover:border-2 border-blue-500 font-medium rounded-md p-2 w-[25rem]"
+                                       placeholder="Code, Name and ETC....." type="text">
+                                <button class="bg-blue-500 p-1.5 rounded-md">Search</button>
+                            </label>
+                            <div class="flex-col flex gap-3 items-center h-[58vh] relative">
+                                <button class="bg-blue-500 hover:bg-blue-600 rounded-md font-medium p-2 mb-3"
+                                        id="dItemsRefreshBtn">Refresh
+                                </button>
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"
+                                     id="dItemsTableLoadingAnimation">
+                                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                                            disabled
+                                            type="button">
+                                        <svg aria-hidden="true" class="inline w-4 h-4 me-3 text-white animate-spin"
+                                             fill="none"
+                                             role="status" viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                                  fill="#E5E7EB"/>
+                                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                                  fill="currentColor"/>
+                                        </svg>
+                                        Loading...
+                                    </button>
+                                </div>
+                                <div class="overflow-auto container">
+                                    <table class="w-full shadow-md text-md text-left rtl:text-right">
+                                        <thead>
+                                        <tr class="text-left text-sm text-gray-700 uppercase bg-gray-50">
+                                            <th class="px-6 rounded-s-lg py-3w-[15vw]" scope="col">
+                                                Code
+                                            </th>
+                                            <th class="px-6 py-3 w-[20vw]" scope="col">
+                                                Name
+                                            </th>
+                                            <th class="px-6 py-3 w-[3vw]" scope="col">
+                                                Action
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="deactivatedItemTableBody">
+                                        <!-- Table body content goes here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="flex-row flex justify-center items-center gap-3">
+                                    <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl"
+                                            id="adminBackwardBtn" value="prev" onclick="navigateDisabledItemTable(this.value)"><
+                                    </button>
+                                    <p id="adminPageCountFld" class="font-medium">1</p>
+                                    <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl"
+                                            id="adminForwardBtn" value="next" onclick="navigateDisabledItemTable(this.value)">>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <section class="flex flex-col gap-5 rounded-md max-h-[300rem] shadow-custom ml-12 mr-12 mb-2 p-5">
+                <h2 class="text-xl font-bold">Orders</h2>
+                <div class="flex-col flex gap-3 justify-start">
+                    <label class="flex flex-row gap-3 justify-start items-center">
+                        <span class="font-bold">Search</span>
+                        <input class="bg-slate-200 h-[2.3rem] hover:border-2 border-blue-500 font-medium rounded-md p-2 w-[25rem]"
+                               placeholder="Code, Name and ETC....." type="text" id="orderSearchFld">
+                        <button class="bg-blue-500 p-1.5 rounded-md" id="orderSearchBtn">Search</button>
+                    </label>
+                    <div class="flex-col flex gap-3 items-center relative">
+                        <button class="bg-blue-500 hover:bg-blue-600 rounded-md font-medium p-2 mb-3"
+                                id="adminOrderRefreshBtn">Refresh
+                        </button>
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"
+                             id="adminOrderTableLoadingAnimation">
+                            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                                    disabled
+                                    type="button">
+                                <svg aria-hidden="true" class="inline w-4 h-4 me-3 text-white animate-spin"
+                                     fill="none"
+                                     role="status" viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                          fill="#E5E7EB"/>
+                                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                          fill="currentColor"/>
+                                </svg>
+                                Loading...
+                            </button>
+                        </div>
+                        <div class="overflow-auto container">
+                            <table class="w-full shadow-md text-md text-left rtl:text-right">
+                                <thead>
+                                <tr class="text-left text-sm text-gray-700 uppercase bg-gray-50">
+                                    <th class="px-6 rounded-s-lg py-3w-[15vw]" scope="col">
+                                        Code
+                                    </th>
+                                    <th class="px-6 py-3" scope="col">
+                                        Payment
+                                    </th>
+                                    <th class="px-6 py-3" scope="col">
+                                        Cashier Name
+                                    </th>
+                                    <th class="px-6 py-3" scope="col">
+                                        Customer Name
+                                    </th>
+                                    <th class="px-6 py-3" scope="col">
+                                        Date and Time
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="adminOrderTableBody">
+                                <!-- Table body content goes here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex-row flex justify-center items-center gap-3">
+                            <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl"
+                                    id="adminOrderBackwardBtn" value="prev" onclick="navigateOrderTable(this.value)"><
+                            </button>
+                            <p id="adminOrderPageCountFld" class="font-medium">1</p>
+                            <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl"
+                                    id="adminOrderForwardBtn" value="next" onclick="navigateOrderTable(this.value)">>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!--Customer Section-->
+    <main class="hidden pt-5 transition-all  ease-in duration-300" id="customerSection">
+        <section class="flex flex-col gap-3 pl-10 pr-10">
+            <div class="flex flex-row justify-between items-center">
+                <div class="flex-col flex gap-5 items-start">
+                    <h1 class="text-2xl font-bold">Customer</h1>
+                    <div>
+                        <label class="font-semibold"> Search
+                            <input class="w-[20rem] m-1 h-[2rem] bg-slate-100 hover:border-2 focus:border-2 border-blue-600 rounded-md p-2"
+                                   id="customerSearchFld"
+                                   placeholder="Code, Name, Address......."
+                                   type="text">
+                        </label>
+                        <button class="w-[3rem] h-[2rem] hover:text-blue-600 p-2 font-semibold text-xl"
+                                id="searchCustomerBtn">Search
+                        </button>
+                    </div>
+                </div>
+                <button class="bg-blue-400 p-2 rounded-md font-semibold text-xl hover:bg-blue-600"
+                        id="showCustomerAddForm"
+                        type="button">Add Customer
+                </button>
+            </div>
+            <div class="transition-all duration-500 hidden min-h-screen min-w-full overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 z-50 justify-center items-center"
+                 id="addCustomer">
+                <div class="fixed inset-0 bg-black bg-opacity-50">
+                    <div class="flex justify-center items-center min-h-screen">
+                        <div class="bg-white p-5 rounded-lg w-fit h-fit flex-col flex gap-4">
+                            <div class="justify-between items-center flex flex-row">
+                                <h1 class="text-2xl font-bold">Add Customer</h1>
+                                <button class="bg-red-500 p-1 rounded-md font-semibold text-md hover:bg-red-600"
+                                        id="closeCustomerAddForm" type="button">Close
+                                </button>
+                            </div>
+                            <form class="flex flex-col gap-5 items-center" id="addCustomerForm">
+                                <div class="flex flex-row gap-5">
+                                    <div class="flex flex-col gap-3 justify-evenly">
+                                        <label class="hidden flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Code</span>
+                                            <input class="rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="customerCodeFld"
+                                                   name="code"
+                                                   placeholder="Code"
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Name</span>
+                                            <input class="cFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="customerNameFld"
+                                                   name="name"
+                                                   placeholder="Name"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Gender</span>
+                                            <select class="cFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                    id="customerGenderSelect"
+                                                    name="gender"
+                                                    required
+                                                    type="text"
+                                            >
+                                                <option value="MALE">MALE</option>
+                                                <option value="FEMALE">FEMALE</option>
+                                                <option value="RN">Rather Not</option>
+                                            </select>
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Lane</span>
+                                            <input class="cFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="customerLaneFld"
+                                                   name="lane"
+                                                   placeholder="Lane"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">City</span>
+                                            <input class="cFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="customerCityFld"
+                                                   name="city"
+                                                   placeholder="City"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">State</span>
+                                            <input class="cFld rounded bg-slate-100 capitalize p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="customerStateFld"
+                                                   name="state"
+                                                   placeholder="State"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Postal Code</span>
+                                            <input class="cFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="customerPostalCodeFld"
+                                                   name="zip"
+                                                   placeholder="Postal Code"
+                                                   required
+                                                   type="number"
+                                            >
+                                        </label>
+                                    </div>
+                                    <div class="flex flex-col gap-3">
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Date of Joined</span>
+                                            <input class="cFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="dojFld"
+                                                   name="doj"
+                                                   placeholder="Date of Joined"
+                                                   required
+                                                   type="date"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Contact No</span>
+                                            <input class="cFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="customerContactFld"
+                                                   name="contact"
+                                                   placeholder="Contact No"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Email</span>
+                                            <input class="cFld rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   id="customerEmailFld"
+                                                   name="email"
+                                                   placeholder="Email"
+                                                   required
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Recent Purchase</span>
+                                            <input class="rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   disabled
+                                                   id="customerRecentPurchaseDateAndTimeFld"
+                                                   name="recentPurchase"
+                                                   placeholder="dd/mm/yyyy hh:mm:ss"
+                                                   type="text"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Level</span>
+                                            <input class="rounded bg-slate-100 uppercase p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   disabled
+                                                   id="levelFld"
+                                                   name="level"
+                                                   placeholder="New"
+                                                   type="text"
+                                                   value="New"
+                                            >
+                                        </label>
+                                        <label class="flex flex-col gap-1">
+                                            <span class="text-blue-600 font-bold">Total Points</span>
+                                            <input class="rounded bg-slate-100 p-1 font-light border-blue-600 hover:border-2 lg:h-[2.5rem]  lg:w-[16rem]"
+                                                   disabled
+                                                   id="pointsFld"
+                                                   name="points"
+                                                   placeholder="0"
+                                                   type="number"
+                                                   value=0
+                                            >
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="w-[10rem] flex bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded text-sm px-5 py-2.5  mr-2 items-center text-center justify-center font-bold text-white"
+                                        id="addCustomerBtn"
+                                        type="submit">
+                                    <svg aria-hidden="true" class="hidden mr-3 w-4 h-4 text-white animate-spin"
+                                         fill="none"
+                                         id="customerBtnLoadingAnimation" role="status"
+                                         viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                              fill="#E5E7EB"></path>
+                                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                              fill="currentColor"></path>
+                                    </svg>
+                                    Add Customer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center gap-5 mt-3 relative">
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"
+                     id="customerTableLoadingAnimation">
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                            disabled
+                            type="button">
+                        <svg aria-hidden="true" class="inline w-4 h-4 me-3 text-white animate-spin" fill="none"
+                             role="status" viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                  fill="#E5E7EB"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                  fill="currentColor"/>
+                        </svg>
+                        Loading...
+                    </button>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-600 rounded-md p-2" id="customerTableRefreshBtn">
+                    Refresh
+                </button>
+                <div class="overflow-auto w-[97vw]">
+                    <table class="w-full shadow-md text-md text-left rtl:text-right max-h-[50vh]">
+                        <thead>
+                        <tr class="text-left text-sm text-gray-700 uppercase bg-gray-50">
+                            <th class="px-6 rounded-s-lg py-3w-[15vw]" scope="col">
+                                Code
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Name
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Gender
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Lane
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                City
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                State
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Zip
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Contact
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Email
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Date of Joined
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3" scope="col">
+                                Total Points
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3" scope="col">
+                                Level
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3" scope="col">
+                                Recent Purchase
+                            </th>
+                            <th class="px-6 rounded-e-lg py-3 w-[10vw]" scope="col">
+                                Action
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody id="customerTableBody">
+                        <!-- Table body content goes here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex-row flex justify-center items-center gap-3">
+                    <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl" id="customerBackwardBtn"
+                            value="prev" onclick="navigateCustomerTable(this.value)"><
+                    </button>
+                    <p id="customerPageCountFld" class="font-medium">1</p>
+                    <button class="font-bold text-blue-500 hover:text-blue-600 text-2xl" id="customerForwardBtn"
+                            value="next" onclick="navigateCustomerTable(this.value)">>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+</main>
+
+<script src="../assets/js/constant.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/supplier.js"></script>
+<script src="../assets/js/customer.js"></script>
+<script src="../assets/js/employee.js"></script>
+<script src="../assets/js/order.js"></script>
+<script src="../assets/js/inventory.js"></script>
+<script src="../assets/js/admin.js"></script>
+</body>
+</html>
